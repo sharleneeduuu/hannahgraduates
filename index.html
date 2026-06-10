@@ -232,42 +232,50 @@
     @keyframes burst{0%{opacity:1;transform:translateY(0) scale(0.5)}60%{opacity:1;transform:translateY(-65px) scale(1.2)}100%{opacity:0;transform:translateY(-100px) scale(0.8)}}
 
 
-    /* ── MUSIC PLAYER ── */
-    .music-btn {
-      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 300;
-      display: flex; align-items: center; gap: 0.5rem;
-      background: rgba(255,255,255,0.85); backdrop-filter: blur(8px);
-      border: 1.5px solid rgba(200,180,220,0.5); border-radius: 999px;
-      padding: 0.5rem 1rem 0.5rem 0.6rem;
-      cursor: pointer; box-shadow: 0 4px 20px rgba(155,123,181,0.2);
-      font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
-      color: var(--purple); font-weight: 500;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* ── MUSIC BAR ── */
+    .music-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(200,180,220,0.4);
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 1.25rem;
+      box-shadow: 0 -4px 20px rgba(155,123,181,0.12);
     }
-    .music-btn:hover { transform: scale(1.05); box-shadow: 0 6px 24px rgba(155,123,181,0.3); }
-    .music-icon {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--purple), var(--lavender));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem; flex-shrink: 0;
+    .music-yt {
+      width: 1px; height: 1px; opacity: 0.01; pointer-events: none;
+      position: absolute; left: -9999px;
     }
+    .music-yt.visible {
+      position: static; width: 160px; height: 30px;
+      opacity: 1; pointer-events: all; border-radius: 6px; overflow: hidden;
+    }
+    .music-info { flex: 1; min-width: 0; }
+    .music-title { font-family: 'Dancing Script', cursive; font-size: 0.95rem; color: var(--purple); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .music-artist { font-size: 0.68rem; color: var(--light); letter-spacing: 0.05em; display: block; margin-top: 1px; }
     .music-bars {
-      display: flex; align-items: flex-end; gap: 2px; height: 14px;
+      display: flex; align-items: flex-end; gap: 2px; height: 14px; flex-shrink: 0;
     }
     .music-bars span {
       display: block; width: 3px; background: var(--purple); border-radius: 2px;
       animation: bar-bounce 0.8s ease-in-out infinite;
     }
-    .music-bars span:nth-child(1) { height: 6px; animation-delay: 0s; }
-    .music-bars span:nth-child(2) { height: 12px; animation-delay: 0.15s; }
-    .music-bars span:nth-child(3) { height: 8px; animation-delay: 0.3s; }
-    .music-bars span:nth-child(4) { height: 10px; animation-delay: 0.1s; }
-    .music-bars.paused span { animation-play-state: paused; height: 4px !important; }
-    @keyframes bar-bounce {
-      0%,100% { transform: scaleY(0.4); }
-      50% { transform: scaleY(1); }
+    .music-bars span:nth-child(1){height:6px;animation-delay:0s}
+    .music-bars span:nth-child(2){height:12px;animation-delay:0.15s}
+    .music-bars span:nth-child(3){height:8px;animation-delay:0.3s}
+    .music-bars span:nth-child(4){height:10px;animation-delay:0.1s}
+    .music-bars.paused span{animation-play-state:paused;height:4px!important}
+    @keyframes bar-bounce{0%,100%{transform:scaleY(0.4)}50%{transform:scaleY(1)}}
+    .music-play-btn {
+      width: 34px; height: 34px; border-radius: 50%; border: none; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--purple), var(--lavender));
+      color: #fff; font-size: 0.9rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 3px 12px rgba(155,123,181,0.35);
+      transition: transform 0.15s ease;
     }
-    .music-label { max-width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .music-play-btn:hover{transform:scale(1.1)}
+    .music-play-btn:active{transform:scale(0.95)}
+    body { padding-bottom: 60px; }
 
     @media(max-width:600px){
       .magic-row{flex-direction:column;align-items:center}
@@ -393,16 +401,16 @@ function LetterModal({onClose}) {
           <p>Maybe because when I think of you, I still see the little girl who just wanted to be where I was. The funny thing is… as I've gotten older, I've realised there are so many things about you I wish I had in me.</p>
           <p>I can still remember how heartbroken you were when vet school didn't work out. I remember how much it broke you at the time. I remember how anxious you felt in the first few months of nursing school because you could not make friends.</p>
           <p>But look at you now.</p>
-          <p>You didn't stay there. You kept going. You found another path and made it your own. You made good friends that you will carry for life.</p>
-          <p>You give so much of yourself to the people around you. More than you realise.</p>
+          <p>You kept going. You found another path and made it your own. You made really good friends that you will carry for life.</p>
+          <p>You give so so so much of yourself to the people around you. More than you realize.</p>
           <p>And I'll always learn from that.</p>
           <p>As you become a nurse, you're going to see people on some of the worst days of their lives. You're going to witness things that are unfair, heartbreaking, and just cruel. Sometimes the world will make you feel like you need to toughen up or care less to survive. But don't. As I told you when you first got your heart broken, don't let those things dim your light.</p>
           <p>I've seen how deeply you feel everything. You experience joy, sadness, excitement, disappointment, love... all of it, so fully. You have such a big heart. And I actually think that's one, out of so many, of the most beautiful things about you.</p>
-          <p>Since I moved away, I know I haven't always been there. There are moments, milestones, ordinary days, and difficult days that I missed simply because I was not around. I wish I could have been beside you for more of them.</p>
+          <p>Since I moved out, I know I haven't always been there. There are moments, milestones, ordinary days, and difficult days that I missed simply because I was not around. I wish I could have been beside you for more of them.</p>
           <p>But none of that has ever changed how proud I am of you.</p>
           <p>Not once.</p>
-          <p>I am proud of the woman you've become.<br/>I am proud of the way you love people.<br/>I am proud of the way you keep going.<br/>I am proud of your courage.</p>
-          <p>And if I'm being honest, I'm excited to see who you become next. Because if this is who you are now, I can only imagine the woman you'll grow into.</p>
+          <p>I am proud of the woman you've become.<br/>I am proud of the way you love people.<br/>I am proud of the way you keep going.<br/>I am proud of your courage and confidence.</p>
+          <p>And so I'm excited to see who you become next. Because if this is who you are now, I can only imagine the woman you'll grow into.</p>
           <p>No matter how old we get, you'll always be my little sister. The little girl who somehow still loves me, believes in me, and sees the best in me even when I can't see it myself.</p>
           <p>Thank you for that.</p>
           <p>I love you more than you'll ever know.</p>
@@ -445,16 +453,18 @@ function App() {
     if (!musicStarted) {
       setMusicStarted(true);
       setMuted(false);
-      return;
+    } else {
+      setMuted(m => !m);
+      // postMessage pause/play
+      setTimeout(() => {
+        const iframe = document.getElementById('yt-player');
+        if (!iframe) return;
+        const cmd = muted
+          ? JSON.stringify({event:'command',func:'playVideo',args:[]})
+          : JSON.stringify({event:'command',func:'pauseVideo',args:[]});
+        try { iframe.contentWindow.postMessage(cmd, '*'); } catch(e) {}
+      }, 100);
     }
-    const iframe = document.getElementById('yt-player');
-    if (!iframe) return;
-    const newMuted = !muted;
-    setMuted(newMuted);
-    const cmd = newMuted
-      ? JSON.stringify({event:'command',func:'mute',args:[]})
-      : JSON.stringify({event:'command',func:'unMute',args:[]});
-    try { iframe.contentWindow.postMessage(cmd, '*'); } catch(e) {}
   }
 
   useFadeIn();
@@ -533,25 +543,29 @@ function App() {
       </div>
 
 
-      {/* YOUTUBE AUDIO */}
-      <iframe
-        id="yt-player"
-        style={{display:'none'}}
-        src={musicStarted
-          ? "https://www.youtube.com/embed/T1J_4lgLun0?autoplay=1&mute=" + (muted?'1':'0') + "&loop=1&playlist=T1J_4lgLun0&enablejsapi=1"
-          : ""}
-        allow="autoplay"
-        title="background music"
-      />
-
-      {/* MUSIC BUTTON */}
-      <button className="music-btn" onClick={toggleMute} title={muted?'Unmute':'Mute'}>
-        <div className="music-icon">🎵</div>
-        <div className={`music-bars ${muted?'paused':''}`}>
+      {/* MUSIC BAR */}
+      <div className="music-bar">
+        <button className="music-play-btn" onClick={toggleMute} aria-label={musicStarted && !muted ? 'Pause' : 'Play'}>
+          {musicStarted && !muted ? '⏸' : '▶'}
+        </button>
+        <div className="music-info">
+          <span className="music-title">🎵 Whistle for the Choir</span>
+          <span className="music-artist">Hannah's cover · tap ▶ to play</span>
+        </div>
+        <div className={`music-bars ${(!musicStarted || muted) ? 'paused' : ''}`}>
           <span/><span/><span/><span/>
         </div>
-        <span className="music-label">{!musicStarted ? 'Play Hannah\'s song ♪' : muted ? 'Unmute ♪' : 'Whistle for the Choir'}</span>
-      </button>
+        {musicStarted && (
+          <iframe
+            id="yt-player"
+            className="music-yt visible"
+            src={"https://www.youtube.com/embed/T1J_4lgLun0?autoplay=1&loop=1&playlist=T1J_4lgLun0&enablejsapi=1&rel=0&modestbranding=1"}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            title="background music"
+          />
+        )}
+      </div>
 
       {showLetter&&<LetterModal onClose={()=>setShowLetter(false)}/>}
       {showGift&&<GiftModal onClose={()=>setShowGift(false)}/>}
